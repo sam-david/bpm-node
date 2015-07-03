@@ -1,12 +1,22 @@
 var express = require('express');
 var passport = require('passport')
 var app = express();
+var mongoose = require('mongoose');
 var path = require('path');
 var port = 3030;
-// var cookieParser = require('cookie-parser');
+var configDB = require('./config/database.js');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var session = require('express-session');
+
+mongoose.connect(configDB.url);
 
 // passport config in separate file, spotify stategy included
 require('./config/passport')(passport); 
+
+app.use(cookieParser());
+app.use(bodyParser());
+app.use(session({ secret: configDB.secret }));
 app.use(passport.initialize());
 app.use(passport.session());
 

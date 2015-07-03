@@ -1,5 +1,6 @@
 var SpotifyStrategy = require('passport-spotify').Strategy;
 var configAuth = require('./auth');
+var User = require('../app/models/user');
 
 module.exports = function(passport) {
 		passport.use(new SpotifyStrategy({
