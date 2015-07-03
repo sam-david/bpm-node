@@ -1,4 +1,10 @@
 module.exports = function(app, passport) {
+  app.get('/', function(req, res) {
+    res.render('index.ejs')
+  })
+  app.get('/profile',function(req,res) {
+    res.render('profile.ejs');
+  })
   app.get('/auth/spotify',
     passport.authenticate('spotify',{scope: ['user-read-email','user-read-private']}),
     function(req, res){
@@ -7,7 +13,7 @@ module.exports = function(app, passport) {
     });
 
   app.get('/auth/spotify/callback',
-    passport.authenticate('spotify', { failureRedirect: '/login' }),
+    passport.authenticate('spotify', { successRedirect: '/profile',failureRedirect: '/' }),
     function(req, res) {
       // Successful authentication, redirect home.
       console.log("response", res)
